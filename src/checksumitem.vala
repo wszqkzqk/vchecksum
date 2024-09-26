@@ -28,11 +28,11 @@ namespace VChecksum {
 public class VChecksum.ChecksumItem {
     string path;
 
-    public ChecksumItem (string path) {
+    public ChecksumItem (owned string path) {
         this.path = path;
     }
 
-    public bool run (ChecksumType algorithm) {
+    public int run (ChecksumType algorithm) {
         var file = File.new_for_commandline_arg (path);
 
         FileInputStream file_stream;
@@ -40,10 +40,10 @@ public class VChecksum.ChecksumItem {
             file_stream = file.read ();
         } catch (IOError e) {
             Reporter.error ("IOError", e.message);
-            return false;
+            return 1;
         } catch (Error e) {
             Reporter.error ("Error", e.message);
-            return false;
+            return 1;
         }
 
         var checksum = new Checksum (algorithm);
@@ -55,11 +55,11 @@ public class VChecksum.ChecksumItem {
             }
         } catch (IOError e) {
             Reporter.error ("IOError", e.message);
-            return false;
+            return 1;
         }
 
         stdout.printf ("%s  %s\n", checksum.get_string (), path);
 
-        return true;
+        return 0;
     }
 }

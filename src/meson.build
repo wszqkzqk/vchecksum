@@ -6,7 +6,7 @@ version_file = vcs_tag(
 
 executable_sources = [
   'checksumitem.vala',
-  'genchecksums.vala',
+  'checksums.vala',
   'main.vala',
   'reporter.vala',
   version_file,

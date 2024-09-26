@@ -1,6 +1,6 @@
 # VChecksum
 
-VChecksum is a simple tool to calculate the checksum of **a file or a url**. It supports MD5, SHA1, SHA256, SHA512 (using GLib's GChecksum).
+VChecksum is a simple tool to calculate the checksum of **files or urls**. It supports MD5, SHA1, SHA256, SHA512 (using GLib's GChecksum).
 
 ## Features
 
