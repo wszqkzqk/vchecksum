@@ -48,9 +48,9 @@ public class VChecksum.Checksums {
         }
     }
 
-    public void checksum (string path) {
+    public void checksum (owned string path) {
         if (unlikely (this.pool == null)) {
-            var item = new ChecksumItem (path);
+            var item = new ChecksumItem ((owned) path);
             if (unlikely (item.run (this.algorithm) != 0)) {
                 this.exit_status = 1;
             }
@@ -58,10 +58,10 @@ public class VChecksum.Checksums {
         }
 
         try {
-            pool.add (new ChecksumItem (path));
+            pool.add (new ChecksumItem ((owned) path));
         } catch (ThreadError e) {
             Reporter.warning ("ThreadWarning", "%s, fallback to single thread", e.message);
-            var item = new ChecksumItem (path);
+            var item = new ChecksumItem ((owned) path);
             if (unlikely (item.run (this.algorithm) != 0)) {
                 this.exit_status = 1;
             }

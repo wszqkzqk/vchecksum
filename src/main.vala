@@ -123,7 +123,7 @@ class VChecksum.CLI {
         }
 
         for (var i = 1; i < args.length; i += 1) {
-            checksums.checksum (args[i]);
+            checksums.checksum ((owned) args[i]);
         }
 
         return checksums.exit_status;
