@@ -111,17 +111,17 @@ class VChecksum.CLI {
             return 1;
         }
 
-        if (args.length == 1) {
-            Reporter.error ("ArgumentError", "No files specified");
-            stderr.printf ("\n%s", opt_context.get_help (true, null));
-            return 1;
-        }
-
         if (threads == 0) {
             threads = (int) get_num_processors ();
         }
 
         var checksums = new Checksums (algorithm_type, threads);
+        if (args.length == 1) {
+            // Read from stdin
+            checksums.checksum ("-");
+            return checksums.exit_status;
+        }
+
         for (var i = 1; i < args.length; i += 1) {
             checksums.checksum (args[i]);
         }

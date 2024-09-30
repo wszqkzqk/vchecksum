@@ -19,7 +19,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
 */
 
-
 namespace VChecksum {
     public const int BUFFER_SIZE = 1 << 17; // 128 KiB
 }
@@ -29,32 +28,37 @@ public class VChecksum.ChecksumItem {
     string path;
 
     public ChecksumItem (owned string path) {
-        this.path = path;
+        this.path = (owned) path;
     }
 
     public int run (ChecksumType algorithm) {
-        var file = File.new_for_commandline_arg (path);
-
-        FileInputStream file_stream;
-        try {
-            file_stream = file.read ();
-        } catch (IOError e) {
-            Reporter.error ("IOError", e.message);
-            return 1;
-        } catch (Error e) {
-            Reporter.error ("Error", e.message);
-            return 1;
-        }
-
         var checksum = new Checksum (algorithm);
         uint8 buffer[VChecksum.BUFFER_SIZE];
         size_t bytes_read;
+
+        if (path == "-") {
+            // Read from stdin
+            while ((bytes_read = stdin.read (buffer)) > 0) {
+                checksum.update (buffer, bytes_read);
+            }
+
+            stdout.printf ("%s  -\n", checksum.get_string ());
+            return 0;
+        }
+
+        var file = File.new_for_commandline_arg (path);
+
         try {
+            FileInputStream file_stream = file.read ();
+
             while ((bytes_read = file_stream.read (buffer)) > 0) {
                 checksum.update (buffer, bytes_read);
             }
         } catch (IOError e) {
             Reporter.error ("IOError", e.message);
+            return 1;
+        } catch (Error e) {
+            Reporter.error ("Error", e.message);
             return 1;
         }
 
