@@ -75,15 +75,15 @@ class VChecksum.CLI {
         case null:
             // Try to find algorithm from the name of the program
             var program_name = Path.get_basename (args[0]).ascii_down ();
-            if (program_name.has_prefix ("md5sum")) {
+            if (program_name.contains ("md5sum")) {
                 algorithm_type = ChecksumType.MD5;
-            } else if (program_name.has_prefix ("sha1sum")) {
+            } else if (program_name.contains ("sha1sum")) {
                 algorithm_type = ChecksumType.SHA1;
-            } else if (program_name.has_prefix ("sha256sum")) {
+            } else if (program_name.contains ("sha256sum")) {
                 algorithm_type = ChecksumType.SHA256;
-            } else if (program_name.has_prefix ("sha384sum")) {
+            } else if (program_name.contains ("sha384sum")) {
                 algorithm_type = ChecksumType.SHA384;
-            } else if (program_name.has_prefix ("sha512sum")) {
+            } else if (program_name.contains ("sha512sum")) {
                 algorithm_type = ChecksumType.SHA512;
             } else {
                 Reporter.warning ("AlgorithmWarning", "Algorithm not specified, use 'sha256' by default");
