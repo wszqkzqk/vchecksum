@@ -21,3 +21,11 @@ executable('vchecksum', executable_sources,
   install: true,
   include_directories: incdir,
 )
+
+hash_algorithms = ['md5', 'sha1', 'sha256', 'sha384', 'sha512']
+
+foreach algorithm : hash_algorithms
+  install_symlink('v' + algorithm + 'sum',
+                  pointing_to: 'vchecksum',
+                  install_dir: get_option('bindir'))
+endforeach
