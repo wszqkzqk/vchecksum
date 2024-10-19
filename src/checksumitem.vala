@@ -34,11 +34,12 @@ public class VChecksum.ChecksumItem {
     public int run (ChecksumType algorithm) {
         var checksum = new Checksum (algorithm);
         uint8 buffer[VChecksum.BUFFER_SIZE];
-        size_t bytes_read;
+        size_t bytes_read = 0;
 
         if (path == "-") {
             // Read from stdin
-            while ((bytes_read = stdin.read (buffer)) > 0) {
+            // Add `stdin.eof () == false` to avoid to require twice EOF to finish
+            while ((stdin.eof () == false) && (bytes_read = stdin.read (buffer)) > 0) {
                 checksum.update (buffer, bytes_read);
             }
 
