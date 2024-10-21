@@ -1,6 +1,6 @@
 # VChecksum
 
-VChecksum is a simple tool to calculate the checksum of **files or urls**. It supports MD5, SHA1, SHA256, SHA512 (using GLib's GChecksum).
+VChecksum is a simple tool to calculate the checksum of **files or urls**. It supports MD5, SHA1, SHA256, SHA384, SHA512 (using GLib's GChecksum).
 
 ## Features
 
@@ -12,4 +12,36 @@ VChecksum is a simple tool to calculate the checksum of **files or urls**. It su
 
 ## Usage
 
-See also `vchecksum --help`.
+```log
+Usage:
+  vchecksum [OPTION…] [Files...] - Calculate checksum of files
+
+Options:
+  -h, --help                                                     Show help message
+  -v, --version                                                  Display version number
+  -a, --algorithm='md5' 'sha1' 'sha256' 'sha384' or 'sha512'     The hash algorithm (Auto-detect if unspecified)
+  -t, --threads=NUM                                              The number of threads to use
+```
+
+If the executable is named as following:
+
+* `vmd5sum` - It will default to MD5
+* `vsha1sum` - It will default to SHA1
+* `vsha256sum` - It will default to SHA256
+* `vsha384sum` - It will default to SHA384
+* `vsha512sum` - It will default to SHA512
+
+It the executable is named as `vchecksum` and no algorithm is specified by `-a`, it will default to **SHA256**.
+
+* `-` can be used to read from stdin.
+* If no files are specified, it will also read from stdin.
+
+## Why do I develop this?
+
+I'm maintaining [an unoffical Arch Linux port for loong64](https://loongarchlinux.lcpu.dev/). This project uses [patch set](https://github.com/lcpu-club/loongarch-packages) to fix some packages and let them work on loong64.
+
+Sometimes we need to not only patch the `PKGBUILD` but also the source code. Arch Linux needs checksums for each file in `source` array. To avoid patch failure as much as possible, we don't use Arch Linux's `updpkgsums` script to update checksums. Instead, we use `source+=` and `sha256sums+=`, etc., to add new files and checksums.
+
+Sometimes the source file is not a local file but a remote url, and I usually don't want to download it to my own x86_64 machine. So I developed this tool that can **calculate the checksum of remote files**.
+
+Because GLib integrates a powerful thread pool function, I also support multithreading for this program.
