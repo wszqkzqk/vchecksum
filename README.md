@@ -31,10 +31,13 @@ If the executable is named as following:
 * `vsha384sum` - It will default to SHA384
 * `vsha512sum` - It will default to SHA512
 
-It the executable is named as `vchecksum` and no algorithm is specified by `-a`, it will default to **SHA256**.
+If the executable is named as `vchecksum` and no algorithm is specified by `-a`, it will default to **SHA256**.
 
-* `-` can be used to read from stdin.
-* If no files are specified, it will also read from stdin.
+* Tips:
+  * `-` can be used to read from stdin.
+  * If no files are specified, it will also read from stdin.
+    * Use `Ctrl+D` (Linux) or `Ctrl+Z and Enter` (Windows) to end input.
+  * If you need to keep the order of multiple files, you can use the `--threads=1` option.
 
 ## Why do I develop this?
 
