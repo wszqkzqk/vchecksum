@@ -1,7 +1,6 @@
 project('vchecksum', ['c', 'vala'],
           version: run_command('git', 'describe', '--tags', check: true).stdout().strip(),
     meson_version: '>= 0.61.0',
-  default_options: ['warning_level=2', 'werror=false', 'b_lto=true'],
 )
 
 gio = dependency('gio-2.0')
