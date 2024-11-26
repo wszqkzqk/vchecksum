@@ -10,6 +10,58 @@ VChecksum is a simple tool to calculate the checksum of **files or urls**. It su
 * Supports multiple files/urls
 * Supports multiple threads
 
+## Build
+
+### Dependencies
+
+#### Runtimes
+
+* GLib
+* GVFS (optional, for remote file support)
+
+On Arch Linux:
+
+```bash
+sudo pacman -S glib2 gvfs --needed
+```
+
+On Windows (MSYS2):
+
+```bash
+pacman -S mingw-w64-ucrt-x86_64-glib2 mingw-w64-ucrt-x86_64-gvfs --needed
+```
+
+#### Development
+
+* GLib
+* Meson
+* Vala
+
+On Arch Linux:
+
+```bash
+sudo pacman -S glib2 meson vala --needed
+```
+
+On Windows (MSYS2):
+
+```bash
+pacman -S mingw-w64-ucrt-x86_64-glib2 mingw-w64-ucrt-x86_64-meson mingw-w64-ucrt-x86_64-vala --needed
+```
+
+### Build
+
+```bash
+meson setup builddir --buildtype=release
+meson compile -C builddir
+```
+
+### Install
+
+```bash
+meson install -C builddir
+```
+
 ## Usage
 
 ```log
